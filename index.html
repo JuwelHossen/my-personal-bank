@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My-Bank</title>
+    <link rel="stylesheet" href="bootstrap-4.5.0-dist/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="bootstrap-4.5.0-dist/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="bank.css">
+</head>
+<body>
+
+    
+    <div id="total-area">
+        <h1 class="text-center bg-primary">WELCOME TO MD HOSSEN BANK</h1>
+        <div class="section">
+            <h2>Login:</h2>
+            <input type="email" placeholder="Email" class ="form-control"><br>
+            <input type="password" placeholder="Password" class ="form-control"><br>
+            <button id ="lb" class="btn btn-success"> Enter</button>
+        </div>
+    </div> 
+
+    <div id="tr">
+        <h1 class ="text-center bg-info text-white">My Account Information</h1>
+        <div class="row">
+            <div class = "col-md-4">
+                <div class="deposit status">
+                     <h5>Deposit </h5>
+                     <h2>$ <span id ="display-deposit">00</span></h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="withdraw status">
+                    <h5>Withdraw</h5>
+                    <h2>$<span id ="display-withdraw">00</span></h2>
+                </div>
+            </div>
+            <div class="col-md-4 ">
+                <div class="balance status">
+                    <h5>Balance</h5>
+                    <h2>$<span id ="display-balance">00</span></h2>
+                </div>
+            </div> 
+         </div>
+
+         <!-- bottom-area -->
+         <div class="row">
+            <div class="col-md-5">
+                <div class="section">
+                    <h4 class="text-center bg-success text-white"> Deposit</h4>
+                    <input id="deposit-amount" type="text"class="form-control" placeholder="Enter Deposit Amount "><br>
+                    <button id="deposit-button"class="btn btn-success">Deposit</button>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="section">
+                    <h4 class="text-center bg-success text-white">Withdraw</h4>
+                    <input id ="withdraw-amount" type="text" class="form-control" placeholder="Enter Withdraw Amount"><br>
+                    <button id="withdraw-button"class="btn btn-danger">Withdraw</button>
+                </div>
+            </div>
+
+            <!-- Clear Button -->
+            <div class="col-md-2">
+                <div class="section">
+                    <h5 class="text-center text-warning">Clear All Box</h5>
+                    <button id="clear-button"class="btn btn-danger text-dark">Clear</button>
+                </div>
+            </div>
+
+
+        </div>
+       </div>
+       
+       
+<!-- JavaScript code -->
+
+    <script>
+        //login button event handler
+        const loginBtn = document.getElementById("lb");
+            loginBtn.addEventListener("click", function(){
+            const totalArea = document.getElementById("total-area");
+            totalArea.style.display='none';
+
+            const trans = document.getElementById("tr");
+            trans.style.display = "block";
+        })
+
+            //deposit button handler
+            const depositBtn=document.getElementById("deposit-button");
+            depositBtn.addEventListener('click',function(){
+                
+                const depositAmount=parseFloat(document.getElementById("deposit-amount").value);
+                const displayDeposit=parseFloat(document.getElementById("display-deposit").innerText);
+                const displayBalance=parseFloat(document.getElementById("display-balance").innerText);
+                if(depositAmount>0){
+                
+                const totalDeposit = depositAmount+displayDeposit;
+                const balance = displayBalance+depositAmount;
+
+                document.getElementById("display-deposit").innerText= totalDeposit;
+                document.getElementById("display-balance").innerText= balance;
+
+                document.getElementById("deposit-amount").value= "";
+                }
+                else{
+                    alert("Enter right Amount:");
+                }
+            })
+
+            //Withdraw button handler
+            const withdrawBtn=document.getElementById("withdraw-button");
+                withdrawBtn.addEventListener('click',function(){
+                    
+                
+                const withdrawAmount= parseFloat(document.getElementById("withdraw-amount").value);
+                const displayWithdraw=parseFloat(document.getElementById("display-withdraw").innerText);
+                const displayBalance=parseFloat(document.getElementById("display-balance").innerText);
+               
+                if(displayBalance>=withdrawAmount && withdrawAmount>0){
+
+                const totalWithdraw = withdrawAmount+displayWithdraw;
+                const balance = displayBalance-withdrawAmount;
+                document.getElementById("display-balance").innerText= balance;
+
+                document.getElementById("display-withdraw").innerText= totalWithdraw;
+
+                document.getElementById("withdraw-amount").value= "";
+            }
+            else{
+                if(withdrawAmount>displayBalance)
+                {
+                    alert("You dont have enough money on your account !");
+                    
+                }
+                else 
+                    alert("You have entered wrong number");
+                
+
+                document.getElementById("withdraw-amount").value= "";
+            }
+            
+            })
+
+            //clear button handling
+
+            const clearBtn= document.getElementById("clear-button");
+            clearBtn.addEventListener('click', function(){
+                const result=confirm ("You really want to clear all ? ");
+                if(result){
+                document.getElementById("display-deposit").innerText=00;
+                document.getElementById("display-withdraw").innerText=00;
+                document.getElementById("display-balance").innerText=00;
+              
+                }
+
+            })
+
+
+
+           
+
+
+    </script>
+</body>
+</html>
